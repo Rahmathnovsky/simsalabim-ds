@@ -19,13 +19,12 @@
         </div>
 
         <!-- Right feature list -->
-        <div class="why-us-features">
+        <div class="why-us-features animate-on-scroll">
           <div
-            class="feature-card animate-on-scroll"
+            class="feature-card"
             v-for="(feature, index) in computedFeatures"
             :key="index"
             :class="{ active: activeFeature === index }"
-            :style="{ transitionDelay: `${index * 0.15 + 0.2}s` }"
             @click="activeFeature = activeFeature === index ? null : index"
           >
             <div class="feature-header">
