@@ -10,13 +10,14 @@
       </div>
     </div>
 
-    <!-- Carousel -->
-    <div class="carousel-wrapper">
-      <div class="carousel-track" ref="track" @mousedown="startDrag" @touchstart="startDrag">
+    <!-- Infinite Marquee -->
+    <div class="marquee-wrapper" @mouseenter="paused = true" @mouseleave="paused = false">
+      <div class="marquee-track" :class="{ 'marquee-paused': paused }">
+        <!-- Original set -->
         <div
           class="portfolio-card"
           v-for="(project, index) in computedProjects"
-          :key="index"
+          :key="'a-' + index"
         >
           <div class="portfolio-image-wrapper">
             <img v-if="project.image" :src="project.image" :alt="project.title" class="portfolio-image" loading="lazy" />
@@ -24,7 +25,35 @@
               <span class="placeholder-title">{{ project.title }}</span>
             </div>
             <div class="portfolio-overlay">
-              <a :href="project.url" target="_blank" class="portfolio-link" @click.stop>
+              <a :href="project.url" target="_blank" class="portfolio-link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                  <polyline points="15 3 21 3 21 9"/>
+                  <line x1="10" y1="14" x2="21" y2="3"/>
+                </svg>
+                {{ t('portfolio.visitSite') }}
+              </a>
+            </div>
+          </div>
+          <div class="portfolio-info">
+            <span class="portfolio-type">{{ project.type }}</span>
+            <h3 class="portfolio-title">{{ project.title }}</h3>
+            <p class="portfolio-desc">{{ project.description }}</p>
+          </div>
+        </div>
+        <!-- Duplicate set for seamless loop -->
+        <div
+          class="portfolio-card"
+          v-for="(project, index) in computedProjects"
+          :key="'b-' + index"
+        >
+          <div class="portfolio-image-wrapper">
+            <img v-if="project.image" :src="project.image" :alt="project.title" class="portfolio-image" loading="lazy" />
+            <div v-else class="portfolio-image-placeholder" :style="{ background: project.gradient }">
+              <span class="placeholder-title">{{ project.title }}</span>
+            </div>
+            <div class="portfolio-overlay">
+              <a :href="project.url" target="_blank" class="portfolio-link">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
                   <polyline points="15 3 21 3 21 9"/>
@@ -41,18 +70,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Navigation arrows -->
-      <button class="carousel-btn carousel-btn-prev" @click="scrollPrev" aria-label="Previous">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M15 18l-6-6 6-6"/>
-        </svg>
-      </button>
-      <button class="carousel-btn carousel-btn-next" @click="scrollNext" aria-label="Next">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <path d="M9 18l6-6-6-6"/>
-        </svg>
-      </button>
     </div>
   </section>
 </template>
@@ -74,10 +91,7 @@ export default {
       projectAlmalik,
       projectKalender,
       projectHipoklorus,
-      isDragging: false,
-      startX: 0,
-      scrollLeft: 0,
-      autoScrollTimer: null
+      paused: false
     }
   },
   computed: {
@@ -125,97 +139,8 @@ export default {
   },
   mounted() {
     this.observeAnimations()
-    this.startAutoScroll()
-    this.$refs.track.addEventListener('mouseenter', this.pauseAutoScroll)
-    this.$refs.track.addEventListener('mouseleave', this.startAutoScroll)
-  },
-  beforeUnmount() {
-    this.pauseAutoScroll()
-    if (this.$refs.track) {
-      this.$refs.track.removeEventListener('mouseenter', this.pauseAutoScroll)
-      this.$refs.track.removeEventListener('mouseleave', this.startAutoScroll)
-    }
   },
   methods: {
-    startAutoScroll() {
-      this.pauseAutoScroll()
-      this.autoScrollTimer = setInterval(() => {
-        const track = this.$refs.track
-        if (!track) return
-        const cardWidth = track.querySelector('.portfolio-card').offsetWidth + 24
-        const maxScroll = track.scrollWidth - track.clientWidth
-        if (track.scrollLeft >= maxScroll - 10) {
-          this.smoothScrollTo(track, 0, 800)
-        } else {
-          this.smoothScrollTo(track, track.scrollLeft + cardWidth, 800)
-        }
-      }, 1500)
-    },
-    pauseAutoScroll() {
-      if (this.autoScrollTimer) {
-        clearInterval(this.autoScrollTimer)
-        this.autoScrollTimer = null
-      }
-    },
-    scrollPrev() {
-      const track = this.$refs.track
-      const cardWidth = track.querySelector('.portfolio-card').offsetWidth + 24
-      this.smoothScrollTo(track, track.scrollLeft - cardWidth, 600)
-    },
-    scrollNext() {
-      const track = this.$refs.track
-      const cardWidth = track.querySelector('.portfolio-card').offsetWidth + 24
-      this.smoothScrollTo(track, track.scrollLeft + cardWidth, 600)
-    },
-    smoothScrollTo(el, target, duration) {
-      const start = el.scrollLeft
-      const change = target - start
-      const startTime = performance.now()
-      
-      const easeInOutCubic = (t) => {
-        return t < 0.5
-          ? 4 * t * t * t
-          : 1 - Math.pow(-2 * t + 2, 3) / 2
-      }
-      
-      const animate = (currentTime) => {
-        const elapsed = currentTime - startTime
-        const progress = Math.min(elapsed / duration, 1)
-        el.scrollLeft = start + change * easeInOutCubic(progress)
-        if (progress < 1) {
-          requestAnimationFrame(animate)
-        }
-      }
-      
-      requestAnimationFrame(animate)
-    },
-    startDrag(e) {
-      this.isDragging = true
-      const track = this.$refs.track
-      this.startX = (e.pageX || e.touches[0].pageX) - track.offsetLeft
-      this.scrollLeft = track.scrollLeft
-      
-      const onMove = (ev) => {
-        if (!this.isDragging) return
-        ev.preventDefault()
-        const x = (ev.pageX || ev.touches[0].pageX) - track.offsetLeft
-        const walk = (x - this.startX) * 1.5
-        track.scrollLeft = this.scrollLeft - walk
-      }
-      
-      const onEnd = () => {
-        this.isDragging = false
-        document.removeEventListener('mousemove', onMove)
-        document.removeEventListener('mouseup', onEnd)
-        document.removeEventListener('touchmove', onMove)
-        document.removeEventListener('touchend', onEnd)
-      }
-      
-      document.addEventListener('mousemove', onMove)
-      document.addEventListener('mouseup', onEnd)
-      document.addEventListener('touchmove', onMove, { passive: false })
-      document.addEventListener('touchend', onEnd)
-    },
     observeAnimations() {
       const observer = new IntersectionObserver(
         (entries) => {
@@ -246,39 +171,63 @@ export default {
   margin-bottom: 48px;
 }
 
-/* Carousel */
-.carousel-wrapper {
+/* Marquee */
+.marquee-wrapper {
+  overflow: hidden;
   position: relative;
-  padding: 0 max(24px, calc((100vw - 1200px) / 2));
+  width: 100%;
 }
 
-.carousel-track {
+/* Gradient masks on edges for fade effect */
+.marquee-wrapper::before,
+.marquee-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.marquee-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--color-bg-light), transparent);
+}
+
+.marquee-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--color-bg-light), transparent);
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
   display: flex;
   gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  cursor: grab;
-  padding-bottom: 16px;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+  padding: 8px 0;
 }
 
-.carousel-track::-webkit-scrollbar {
-  display: none;
-}
-
-.carousel-track:active {
-  cursor: grabbing;
+.marquee-track.marquee-paused {
+  animation-play-state: paused;
 }
 
 .portfolio-card {
-  flex: 0 0 380px;
+  flex: 0 0 360px;
   background: var(--color-bg-white);
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--color-border);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  scroll-snap-align: start;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
   user-select: none;
 }
 
@@ -417,68 +366,34 @@ export default {
   line-height: 1.6;
 }
 
-/* Carousel buttons */
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--color-bg-white);
-  border: 1px solid var(--color-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--color-text-primary);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.carousel-btn:hover {
-  background: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 20px rgba(99, 91, 255, 0.3);
-}
-
-.carousel-btn-prev {
-  left: max(8px, calc((100vw - 1200px) / 2 - 8px));
-}
-
-.carousel-btn-next {
-  right: max(8px, calc((100vw - 1200px) / 2 - 8px));
-}
-
 /* Responsive */
 @media (max-width: 968px) {
   .portfolio-card {
-    flex: 0 0 340px;
+    flex: 0 0 320px;
   }
 
-  .carousel-wrapper {
-    padding: 0 24px;
+  .marquee-wrapper::before,
+  .marquee-wrapper::after {
+    width: 60px;
   }
 
-  .carousel-btn-prev {
-    left: 8px;
-  }
-
-  .carousel-btn-next {
-    right: 8px;
+  .marquee-track {
+    animation-duration: 30s;
   }
 }
 
 @media (max-width: 640px) {
   .portfolio-card {
-    flex: 0 0 calc(100vw - 64px);
+    flex: 0 0 280px;
   }
 
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
+  .marquee-wrapper::before,
+  .marquee-wrapper::after {
+    width: 30px;
+  }
+
+  .marquee-track {
+    animation-duration: 25s;
   }
 }
 </style>

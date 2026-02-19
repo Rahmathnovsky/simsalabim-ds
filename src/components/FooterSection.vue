@@ -47,7 +47,7 @@
             <li><a href="#services">Web Design</a></li>
             <li><a href="#services">Web Development</a></li>
             <li><a href="#services">Product Management</a></li>
-            <li><a href="#services">Marketing</a></li>
+            <li><a href="#services">Digital Marketing</a></li>
             <li><a href="#services">Graphic Design</a></li>
           </ul>
         </div>
