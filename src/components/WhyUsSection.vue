@@ -38,11 +38,9 @@
                 </svg>
               </div>
             </div>
-            <transition name="expand">
-              <div v-if="activeFeature === index" class="feature-body">
-                <p>{{ feature.description }}</p>
-              </div>
-            </transition>
+            <div class="feature-body" :class="{ 'feature-body-open': activeFeature === index }">
+              <p>{{ feature.description }}</p>
+            </div>
           </div>
         </div>
       </div>
@@ -212,34 +210,24 @@ export default {
 }
 
 .feature-body {
-  padding-top: 16px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding-top: 0;
   padding-left: 46px;
+  transition: max-height 0.35s ease, opacity 0.3s ease, padding-top 0.35s ease;
+}
+
+.feature-body.feature-body-open {
+  max-height: 200px;
+  opacity: 1;
+  padding-top: 16px;
 }
 
 .feature-body p {
   font-size: 14px;
   color: var(--color-text-light);
   line-height: 1.7;
-}
-
-/* Transition */
-.expand-enter-active,
-.expand-leave-active {
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.expand-enter-from,
-.expand-leave-to {
-  opacity: 0;
-  max-height: 0;
-  padding-top: 0;
-}
-
-.expand-enter-to,
-.expand-leave-from {
-  opacity: 1;
-  max-height: 200px;
 }
 
 @media (max-width: 968px) {
