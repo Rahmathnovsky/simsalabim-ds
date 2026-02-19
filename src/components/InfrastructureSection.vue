@@ -130,7 +130,10 @@ export default {
         { label: 'CI/CD', bg: 'rgba(0,212,170,0.15)' }
       ],
       animId: null,
-      lines: []
+      lines: [],
+      isCanvasVisible: false,
+      canvasObserver: null,
+      resizeTimeout: null
     }
   },
   computed: {
@@ -146,24 +149,43 @@ export default {
     this.observeAnimations()
     this.$nextTick(() => {
       this.initWaveCanvas()
+      // Pause canvas when off-screen
+      this.canvasObserver = new IntersectionObserver(
+        ([entry]) => {
+          this.isCanvasVisible = entry.isIntersecting
+          if (entry.isIntersecting && !this.animId) {
+            this.startDrawLoop()
+          }
+        },
+        { threshold: 0 }
+      )
+      if (this.$refs.waveContainer) {
+        this.canvasObserver.observe(this.$refs.waveContainer)
+      }
     })
     window.addEventListener('resize', this.onResize)
   },
   beforeUnmount() {
     if (this.animId) cancelAnimationFrame(this.animId)
+    if (this.canvasObserver) this.canvasObserver.disconnect()
+    if (this.resizeTimeout) clearTimeout(this.resizeTimeout)
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
     onResize() {
-      if (this.animId) cancelAnimationFrame(this.animId)
-      this.initWaveCanvas()
+      if (this.resizeTimeout) clearTimeout(this.resizeTimeout)
+      this.resizeTimeout = setTimeout(() => {
+        if (this.animId) cancelAnimationFrame(this.animId)
+        this.animId = null
+        this.initWaveCanvas()
+      }, 200)
     },
     initWaveCanvas() {
       const canvas = this.$refs.waveCanvas
       const container = this.$refs.waveContainer
       if (!canvas || !container) return
 
-      const dpr = window.devicePixelRatio || 1
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
       const w = container.clientWidth
       const h = container.clientHeight
       canvas.width = w * dpr
@@ -174,8 +196,9 @@ export default {
       const ctx = canvas.getContext('2d')
       ctx.scale(dpr, dpr)
 
-      // Generate 30 spaced-out flowing ribbon lines along a sweeping arc
-      const totalLines = 30
+      // Reduce complexity on mobile
+      const isMobile = w < 768
+      const totalLines = isMobile ? 15 : 30
       const lines = []
       for (let i = 0; i < totalLines; i++) {
         const t = i / (totalLines - 1) // 0..1
@@ -205,11 +228,34 @@ export default {
       ]
 
       let time = 0
-      const segments = 250
+      const segments = isMobile ? 80 : 200
+
+      this._drawCtx = ctx
+      this._drawW = w
+      this._drawH = h
+      this._drawLines = lines
+      this._drawColors = colors
+      this._drawSegments = segments
+      this._drawTime = time
+
+      this.startDrawLoop()
+    },
+    startDrawLoop() {
+      if (this.animId) return
+      const ctx = this._drawCtx
+      const w = this._drawW
+      const h = this._drawH
+      const lines = this._drawLines
+      const colors = this._drawColors
+      const segments = this._drawSegments
 
       const draw = () => {
+        if (!this.isCanvasVisible) {
+          this.animId = null
+          return
+        }
         ctx.clearRect(0, 0, w, h)
-        time += 0.005
+        this._drawTime += 0.005
 
         for (let li = 0; li < lines.length; li++) {
           const line = lines[li]
@@ -250,8 +296,8 @@ export default {
             const offsetY = Math.sin(perpAngle) * line.ribbonOffset * (0.5 + st * 0.5)
 
             // Micro-oscillations for flowing feel
-            const micro1 = Math.sin(st * 8 + time * line.speed + line.phase) * line.microAmp
-            const micro2 = Math.sin(st * 14 + time * line.speed * 0.7 + line.phase * 1.5) * line.microAmp * 0.3
+            const micro1 = Math.sin(st * 8 + this._drawTime * line.speed + line.phase) * line.microAmp
+            const micro2 = Math.sin(st * 14 + this._drawTime * line.speed * 0.7 + line.phase * 1.5) * line.microAmp * 0.3
 
             const finalX = x + offsetX
             const finalY = baseY + offsetY + micro1 + micro2

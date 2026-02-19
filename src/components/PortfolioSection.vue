@@ -19,7 +19,7 @@
           :key="index"
         >
           <div class="portfolio-image-wrapper">
-            <img v-if="project.image" :src="project.image" :alt="project.title" class="portfolio-image" />
+            <img v-if="project.image" :src="project.image" :alt="project.title" class="portfolio-image" loading="lazy" />
             <div v-else class="portfolio-image-placeholder" :style="{ background: project.gradient }">
               <span class="placeholder-title">{{ project.title }}</span>
             </div>
@@ -59,9 +59,9 @@
 
 <script>
 import { useI18n } from '../i18n.js'
-import projectAlmalik from '../assets/img/portfolio/project-5.png'
-import projectKalender from '../assets/img/portfolio/project-4.png'
-import projectHipoklorus from '../assets/img/portfolio/project-1.png'
+import projectAlmalik from '../assets/img/portfolio/project-5.webp'
+import projectKalender from '../assets/img/portfolio/project-4.webp'
+import projectHipoklorus from '../assets/img/portfolio/project-1.webp'
 
 export default {
   name: 'PortfolioSection',

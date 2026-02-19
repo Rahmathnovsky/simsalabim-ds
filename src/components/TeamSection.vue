@@ -17,7 +17,7 @@
           :style="{ transitionDelay: `${index * 0.1 + 0.2}s` }"
         >
           <div class="team-avatar-wrapper">
-            <img :src="avatarImg" :alt="member.name" class="team-avatar" />
+            <img :src="avatarImg" :alt="member.name" class="team-avatar" loading="lazy" />
             <div class="team-avatar-ring" :style="{ borderColor: member.color }"></div>
           </div>
           <div class="team-info">
@@ -38,7 +38,7 @@
 
 <script>
 import { useI18n } from '../i18n.js'
-import avatarImg from '../assets/img/team/avatar.png'
+import avatarImg from '../assets/img/team/avatar.webp'
 
 export default {
   name: 'TeamSection',
