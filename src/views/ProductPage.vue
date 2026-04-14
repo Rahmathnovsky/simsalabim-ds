@@ -79,7 +79,8 @@
                 class="showcase-image" 
                 :style="{ background: showcaseItems[activeShowcaseIndex].gradient }"
               >
-                 <span class="showcase-image-title">{{ showcaseItems[activeShowcaseIndex].title }}</span>
+                 <img v-if="showcaseItems[activeShowcaseIndex].image" :src="showcaseItems[activeShowcaseIndex].image" alt="Showcase Preview" class="showcase-actual-image" />
+                 <span v-else class="showcase-image-title">{{ showcaseItems[activeShowcaseIndex].title }}</span>
               </div>
             </transition>
           </div>
@@ -132,6 +133,7 @@ import { useI18n } from '../i18n.js'
 import NavBar from '../components/NavBar.vue'
 import FooterSection from '../components/FooterSection.vue'
 import WhatsAppButton from '../components/WhatsAppButton.vue'
+import posSystemImage from '../assets/img/portfolio/pos-system.png'
 
 export default {
   name: 'ToolsPage',
@@ -142,6 +144,7 @@ export default {
   },
   data() {
     return {
+      posSystemImage,
       activeShowcaseIndex: 0,
       showcaseInterval: null
     }
@@ -174,6 +177,7 @@ export default {
         {
           title: this.t('tools.showcaseItem1Title'),
           description: this.t('tools.showcaseItem1Desc'),
+          image: this.posSystemImage,
           gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%)'
         },
         {
@@ -516,6 +520,15 @@ export default {
   border-radius: var(--radius-lg);
   background-size: cover !important;
   background-position: center !important;
+}
+
+.showcase-actual-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
 }
 
 .showcase-image-title {
