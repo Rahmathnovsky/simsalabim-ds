@@ -76,6 +76,8 @@
 
 <script>
 import { useI18n } from '../i18n.js'
+import projectGaon from '../assets/img/portfolio/gaon.png'
+import projectFieldit from '../assets/img/portfolio/fieldit.png'
 import projectAlmalik from '../assets/img/portfolio/project-5.webp'
 import projectKalender from '../assets/img/portfolio/project-4.webp'
 import projectHipoklorus from '../assets/img/portfolio/project-1.webp'
@@ -88,6 +90,8 @@ export default {
   },
   data() {
     return {
+      projectGaon,
+      projectFieldit,
       projectAlmalik,
       projectKalender,
       projectHipoklorus,
@@ -101,7 +105,7 @@ export default {
           title: 'Field It',
           type: 'Web App',
           description: this.t('portfolio.p4Desc'),
-          image: null,
+          image: this.projectFieldit,
           gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #533483 100%)',
           url: 'https://field-it-three.vercel.app/'
         },
@@ -109,7 +113,7 @@ export default {
           title: 'Gaon',
           type: 'Website',
           description: this.t('portfolio.p5Desc'),
-          image: null,
+          image: this.projectGaon,
           gradient: 'linear-gradient(135deg, #0c0c1d 0%, #1b1b3a 30%, #2d1b69 60%, #11998e 100%)',
           url: 'https://gaon-rho.vercel.app/'
         },

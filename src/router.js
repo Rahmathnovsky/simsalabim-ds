@@ -7,6 +7,11 @@ const routes = [
         component: () => import('./views/LandingPage.vue')
     },
     {
+        path: '/product',
+        name: 'Product',
+        component: () => import('./views/ProductPage.vue')
+    },
+    {
         path: '/admin',
         name: 'Admin',
         component: () => import('./views/admin/AdminLayout.vue'),

@@ -1,15 +1,17 @@
 <template>
   <header class="navbar" :class="{ scrolled: isScrolled, 'menu-open': menuOpen }">
     <div class="container nav-container">
-      <a href="#" class="nav-logo" @click.prevent="scrollToTop">
+      <a href="/" class="nav-logo">
+        <img src="/favicon.png" alt="Simsalabim Logo" class="logo-icon-img" width="32" height="32" />
         <span class="logo-text">Simsalabim</span>
       </a>
 
       <nav class="nav-links" :class="{ active: menuOpen }">
-        <a href="#about" @click="closeMenu" class="nav-link">{{ t('nav.about') }}</a>
-        <a href="#services" @click="closeMenu" class="nav-link">{{ t('nav.services') }}</a>
-        <a href="#portfolio" @click="closeMenu" class="nav-link">{{ t('nav.projects') }}</a>
-        <a href="#team" @click="closeMenu" class="nav-link">{{ t('nav.team') }}</a>
+        <a href="/#about" @click="closeMenu" class="nav-link">{{ t('nav.about') }}</a>
+        <a href="/#services" @click="closeMenu" class="nav-link">{{ t('nav.services') }}</a>
+        <a href="/#portfolio" @click="closeMenu" class="nav-link">{{ t('nav.projects') }}</a>
+        <a href="/#team" @click="closeMenu" class="nav-link">{{ t('nav.team') }}</a>
+        <a href="/product" @click="closeMenu" class="nav-link nav-link-tools">{{ t('nav.tools') }}</a>
       </nav>
 
       <div class="nav-actions">
@@ -130,6 +132,10 @@ export default {
   font-weight: 800;
   color: var(--color-text-white);
   letter-spacing: -0.5px;
+}
+
+.logo-icon {
+  color: var(--color-primary);
 }
 
 .nav-links {
@@ -294,6 +300,31 @@ export default {
 
   .lang-toggle-mobile {
     padding: 6px 10px;
+  }
+}
+
+/* Tools Button - White Border */
+.nav-link-tools {
+  border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  padding: 6px 18px !important;
+  border-radius: var(--radius-pill);
+  font-weight: 600 !important;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-link-tools:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: #fff !important;
+}
+
+@media (max-width: 768px) {
+  .nav-link-tools {
+    border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+    padding: 10px 28px !important;
+    border-radius: var(--radius-pill);
+    font-size: 20px !important;
+    text-align: center;
   }
 }
 </style>

@@ -8,6 +8,7 @@ const messages = {
             services: 'Services',
             projects: 'Projects',
             team: 'Team',
+            tools: 'Our Products',
             contactUs: 'Contact Us'
         },
         // Hero
@@ -89,6 +90,22 @@ const messages = {
             p4Desc: 'Smart field management and data collection platform with modern dashboard and analytics.',
             p5Desc: 'Elegant business platform with premium design, seamless user experience, and modern aesthetics.'
         },
+        // Systems (Highlight Product)
+        systems: {
+            label: 'Our Systems',
+            title: 'Featured Applications',
+            subtitle: 'Discover the systems and applications we have developed to empower businesses and streamline digital transformation.',
+            visitSystem: 'View System',
+            learnMore: 'Learn More',
+            mainHighlightTitle: 'Featured System',
+            mainHighlightDesc: 'A comprehensive and powerful platform designed to scale with your business.',
+            otherTitle1: 'Other System 1',
+            otherDesc1: 'Innovative solution to improve workflow efficiency.',
+            otherTitle2: 'Other System 2',
+            otherDesc2: 'Integrated service management module.',
+            otherTitle3: 'Other System 3',
+            otherDesc3: 'An advanced analytics and tracking system.'
+        },
         // Team
         team: {
             label: 'Our Team',
@@ -116,6 +133,43 @@ const messages = {
         // WhatsApp
         whatsapp: {
             tooltip: 'Chat with us!'
+        },
+        // Tools page
+        tools: {
+            heroTitle: 'Systems & Applications',
+            heroHighlight: 'Built for You',
+            heroSubtitle: 'Explore the digital solutions and systems we have developed to optimize workflows, manage businesses, and drive growth.',
+            heroCta: 'Contact Us',
+            f1Title: 'Custom Built',
+            f1Desc: 'Each system is tailored to specific business needs, not generic templates.',
+            f2Title: 'Modern Tech Stack',
+            f2Desc: 'Built with the latest frameworks and technologies for optimal performance and scalability.',
+            f3Title: 'Fully Integrated',
+            f3Desc: 'All systems are designed to work together seamlessly within your business ecosystem.',
+            highlightLabel: 'FEATURED SYSTEM',
+            highlightTitle: 'Featured System',
+            highlightDesc: 'A comprehensive platform designed to empower your business operations with modern technology.',
+            visitSystem: 'Visit System',
+            otherTitle: 'More Systems',
+            otherSubtitle: 'Explore our other solutions built to solve real business challenges.',
+            sys1Title: 'System 1',
+            sys1Desc: 'Innovative solution for workflow optimization and efficiency.',
+            sys2Title: 'System 2',
+            sys2Desc: 'Integrated service and resource management module.',
+            sys3Title: 'System 3',
+            sys3Desc: 'Advanced analytics and business tracking platform.',
+            showcaseTitle: 'Sales & marketing teams',
+            showcaseItem1Title: 'Slide deck builders',
+            showcaseItem1Desc: 'Generate beautiful, custom, and on-brand pitch decks faster than ever with interactive functionality.',
+            showcaseItem2Title: 'ROI calculators',
+            showcaseItem2Desc: 'Show prospects their potential savings with custom inputs, branded design, and shareable results.',
+            showcaseItem3Title: 'Campaign dashboards',
+            showcaseItem3Desc: 'Track performance across channels with metrics that matter to your team, not vendor defaults.',
+            showcaseItem4Title: 'Event & program tools',
+            showcaseItem4Desc: 'Run registrations, forms, and cross-functional hubs without spreadsheets or manual ops work.',
+            ctaTitle: 'Need a Custom System?',
+            ctaSubtitle: 'Let us build the perfect digital solution for your business needs.',
+            ctaButton: 'Get in Touch'
         }
     },
     id: {
@@ -124,6 +178,7 @@ const messages = {
             services: 'Layanan',
             projects: 'Proyek',
             team: 'Tim',
+            tools: 'Produk Kami',
             contactUs: 'Hubungi Kami'
         },
         hero: {
@@ -199,6 +254,21 @@ const messages = {
             p4Desc: 'Platform manajemen lapangan dan pengumpulan data cerdas dengan dashboard modern dan analitik.',
             p5Desc: 'Platform bisnis elegan dengan desain premium, pengalaman pengguna yang mulus, dan estetika modern.'
         },
+        systems: {
+            label: 'Sistem Kami',
+            title: 'Sistem & Aplikasi Unggulan',
+            subtitle: 'Temukan berbagai sistem dan aplikasi yang telah kami kembangkan untuk mendorong ekosistem bisnis Anda di era digital.',
+            visitSystem: 'Kunjungi Sistem',
+            learnMore: 'Pelajari Lebih Lanjut',
+            mainHighlightTitle: 'Sistem Unggulan',
+            mainHighlightDesc: 'Platform lengkap dan tangguh yang dirancang untuk berkembang dan berskala bersama bisnis Anda.',
+            otherTitle1: 'Sistem Lain 1',
+            otherDesc1: 'Solusi inovatif untuk meningkatkan efisiensi proses bisnis.',
+            otherTitle2: 'Sistem Lain 2',
+            otherDesc2: 'Modul manajemen layanan terintegrasi sistematis.',
+            otherTitle3: 'Sistem Lain 3',
+            otherDesc3: 'Sistem analitik tingkat lanjut yang sangat responsif.'
+        },
         team: {
             label: 'Tim Kami',
             title: 'Dibangun oleh para ahli<br />yang berdedikasi.',
@@ -223,6 +293,42 @@ const messages = {
         },
         whatsapp: {
             tooltip: 'Chat dengan kami!'
+        },
+        tools: {
+            heroTitle: 'Sistem & Aplikasi',
+            heroHighlight: 'Dibangun untuk Anda',
+            heroSubtitle: 'Jelajahi solusi dan sistem digital yang telah kami kembangkan untuk mengoptimalkan alur kerja, mengelola bisnis, dan mendorong pertumbuhan.',
+            heroCta: 'Hubungi Kami',
+            f1Title: 'Dibuat Khusus',
+            f1Desc: 'Setiap sistem dirancang sesuai kebutuhan bisnis spesifik, bukan template generik.',
+            f2Title: 'Teknologi Modern',
+            f2Desc: 'Dibangun dengan framework dan teknologi terbaru untuk performa dan skalabilitas optimal.',
+            f3Title: 'Terintegrasi Penuh',
+            f3Desc: 'Semua sistem dirancang untuk bekerja secara mulus dalam ekosistem bisnis Anda.',
+            highlightLabel: 'SISTEM UNGGULAN',
+            highlightTitle: 'Sistem Unggulan',
+            highlightDesc: 'Platform komprehensif yang dirancang untuk memberdayakan operasional bisnis Anda dengan teknologi modern.',
+            visitSystem: 'Kunjungi Sistem',
+            otherTitle: 'Sistem Lainnya',
+            otherSubtitle: 'Jelajahi solusi lain yang kami bangun untuk menjawab tantangan bisnis nyata.',
+            sys1Title: 'Sistem 1',
+            sys1Desc: 'Solusi inovatif untuk optimasi alur kerja dan efisiensi.',
+            sys2Title: 'Sistem 2',
+            sys2Desc: 'Modul manajemen layanan dan sumber daya terintegrasi.',
+            sys3Title: 'Sistem 3',
+            sys3Desc: 'Platform analitik dan pelacakan bisnis tingkat lanjut.',
+            showcaseTitle: 'Tim Sales & Pemasaran',
+            showcaseItem1Title: 'Pembuat Slide Presentasi',
+            showcaseItem1Desc: 'Hasilkan pitch deck khusus dan sesuai merek dengan cepat, dilengkapi fungsionalitas interaktif.',
+            showcaseItem2Title: 'Kalkulator ROI',
+            showcaseItem2Desc: 'Tunjukkan potensi penghematan kepada prospek Anda dengan input kustom dan desain bermerek.',
+            showcaseItem3Title: 'Dashboard Kampanye',
+            showcaseItem3Desc: 'Lacak performa di seluruh saluran dengan metrik yang paling berarti bagi tim Anda.',
+            showcaseItem4Title: 'Tools Event & Program',
+            showcaseItem4Desc: 'Jalankan pendaftaran, formulir, dan hub lintas fungsi tanpa kerumitan spreadsheet.',
+            ctaTitle: 'Butuh Sistem Kustom?',
+            ctaSubtitle: 'Kami siap membangun solusi digital yang sempurna untuk kebutuhan bisnis Anda.',
+            ctaButton: 'Hubungi Kami'
         }
     }
 }

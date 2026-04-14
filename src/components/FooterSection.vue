@@ -4,7 +4,10 @@
       <div class="footer-grid">
         <!-- Company Info -->
         <div class="footer-company">
-          <a href="#" class="footer-logo">Simsalabim</a>
+          <a href="/" class="footer-logo">
+            <img src="/favicon.png" alt="Simsalabim Logo" class="footer-logo-img" width="70" height="70" />
+            <!-- Simsalabim -->
+          </a>
           <p class="footer-address">
             Jalan Mega Kuningan<br />
             Lot 5.1 12950<br />
@@ -130,8 +133,11 @@ export default {
   font-size: 22px;
   font-weight: 800;
   color: var(--color-text-white);
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 20px;
+  text-decoration: none;
 }
 
 .footer-address {
