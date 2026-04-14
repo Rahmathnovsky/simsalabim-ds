@@ -230,7 +230,7 @@ export default {
     startShowcase() {
       this.showcaseInterval = setInterval(() => {
         this.activeShowcaseIndex = (this.activeShowcaseIndex + 1) % this.showcaseItems.length;
-      }, 5000);
+      }, 3000);
     },
     pauseShowcase() {
       if (this.showcaseInterval) {
